@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user table</title>
+</head>
+<body>
+    <form action="#" th:action="@{/user/}" method="post">
+        <div>用户名：<input type="text" th:name="userName"></div>
+        <div>性别：<input type="text" th:name="sex"></div>
+        <div>备注：<input type="text" th:name="memo"></div>
+        <div>
+            <input type="submit" th:name="submit"/>
+            <a href="#" th:href="@{/user/}">return</a>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <title></title>
+</head>
+<body>
+    <form class="form-horizontal" th:action="${'/user/'}" th:method="post">
+        <div class="form-group">
+            <label for="username" class="col-sm-2 control-label">username</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="username" name="userName" placeholder="username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pass" class="col-sm-2 control-label">pass</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="pass" name="pass" placeholder="pass">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sex" class="col-sm-2 control-label">sex</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="sex" name="sex" placeholder="sex">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="memo" class="col-sm-2 control-label">memo</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="memo" name="memo" placeholder="memo">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="available" class="col-sm-2 control-label">available</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="available" name="available" placeholder="available">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-2">
+                <input type="submit" class="form-control" th:name="submit">
+            </div>
+        </div>
+    </form>
+
+<script th:inline="javascript">
+
+</script>
+</body>
+</html>

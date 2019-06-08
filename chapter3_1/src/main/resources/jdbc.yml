@@ -1,0 +1,18 @@
+database:
+  testconfig:
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/testconfig?useSSL=false
+    username: root
+    password: root
+
+  test:
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false
+    username: root
+    password: root
+
+  testb:
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/testb?useSSL=false
+    username: root
+    password: root

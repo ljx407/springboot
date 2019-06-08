@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljx.chapter15.dao.InventoryDao">
+    <select id="findStock" parameterType="long" resultType="Inventory">
+        select
+          id,
+          productId,
+          stock,
+          version
+        from t_inventory
+        where productId = #{productId}
+    </select>
+
+    <select id="findStockWithLock" parameterType="long" resultType="Inventory">
+        select
+          id,
+          productId,
+          stock,
+          version
+        from t_inventory
+        where productId = #{productId} for update
+    </select>
+
+    <update id="decreaseInventory">
+        update t_inventory
+        set stock = stock - #{quantity}
+        where productId = #{productId}
+    </update>
+
+    <update id="updateInventory">
+        update t_inventory
+        set stock = #{currStock}
+        where productId = #{productId}
+    </update>
+
+    <update id="restoreInventory" parameterType="long">
+        update t_inventory
+        set stock = 100,version = 1
+        where productId = #{productId};
+    </update>
+
+    <update id="decreaseInventoryWithVersion">
+        update t_inventory
+        set stock = stock - #{quantity}, version = version + 1
+        where productId = #{productId} and version = #{version};
+    </update>
+
+</mapper>    

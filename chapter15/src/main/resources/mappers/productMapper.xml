@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljx.chapter15.dao.ProductDao">
+
+    <select id="findProductById" parameterType="long" resultType="Product">
+        select
+          id,
+          productName,
+          price
+        from t_product
+        where id = #{id}
+
+    </select>
+
+    <select id="findProductListByIds" resultType="Product">
+        select
+          id,
+          productName,
+          price
+        from t_product
+        <where>
+            id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+
+    </select>
+</mapper>    

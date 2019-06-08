@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user table</title>
+</head>
+<body>
+    <form action="#" th:action="@{/user/}" method="post">
+        <input type="hidden" th:name="_method" th:value="put" />
+        <input type="hidden" th:name="id" th:value="${user.id}" />
+        <div>用户名：<input type="text" th:name="userName" th:value="${user.userName}"></div>
+        <div>性别：<input type="text" th:name="sex" th:value="${user.sex}"></div>
+        <div>备注：<input type="text" th:name="memo" th:value="${user.memo}"></div>
+        <div>
+            <input type="submit" th:name="submit"/>
+            <a href="#" th:href="@{/user/findAll}">return</a>
+        </div>
+    </form>
+</body>
+</html>

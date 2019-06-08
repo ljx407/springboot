@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljx.chapter7cache.dao.UserDao">
+    <select id="getUserById" parameterType="java.lang.Long" resultType="user">
+        select * from t_user where id = #{id}
+    </select>
+
+    <select id="getUserByName" parameterType="string" resultType="user">
+        select * from t_user where name = #{name}
+    </select>
+
+    <insert id="insertUser" parameterType="user" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into t_user(name,sex,memo) values (#{name}, #{sex}, #{memo})
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+        update t_user
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="memo != null">memo = #{memo},</if>
+            <if test="sex != null">sex = #{sex},</if>
+        </set>
+        where  id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="long">
+        delete from  t_user where id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user table</title>
+</head>
+<body>
+    <form action="#" th:action="@{/user/findByUserName}" method="post">
+        用户名：<input type="text" th:name="userName" />
+        <input type="submit" value="submit!" />
+    </form>
+    <div>
+        <a href="/user/toAdd">add</a>
+    </div>
+    <div th:switch="${#lists.isEmpty(users)}">
+        <h2 th:case="true">users is empty</h2>
+        <div th:case="*">
+            <table border="1">
+                <tr>
+                    <th>id</th>
+                    <th>username</th>
+                    <th>sex</th>
+                    <th>memo</th>
+                    <th>opt</th>
+                </tr>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">99</td>
+                    <td th:text="${user.userName}">99</td>
+                    <td th:text="${user.sex.value}">99</td>
+                    <td th:text="${user.memo}">99</td>
+                    <td>
+                        <a href="#" th:href="@{/user/detail(id=${user.id})}">view</a>
+                        <a href="#" th:href="@{/user/toUpdate(id=${user.id})}">edit</a>
+                        <a href="#" th:href="@{/user/delete(id=${user.id})}">delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

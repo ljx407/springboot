@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <title></title>
+</head>
+<body>
+
+<div>
+    请求数: <input type="text" id="requestNum" />
+    <input type="hidden" id="num"/>
+    默认次数: <input type="text" id="defaultValue" value="1"/>
+</div>
+
+<div>
+    <input type="button" class="btn btn-primary" onclick="sendLock()" th:value="sendLock" />
+    <input type="button" class="btn btn-primary" onclick="sendDBLock()" th:value="sendDBLock" />
+    <input type="button" class="btn btn-primary" onclick="sendNoLock()" th:value="sendNoLock" />
+    <input type="button" class="btn btn-primary" onclick="sendVersionLock()" th:value="sendVersionLock" />
+    <input type="button" class="btn btn-primary" onclick="sendRedisLock()" th:value="sendRedisLock" />
+    <input type="button" class="btn btn-primary" onclick="restore()" th:value="restore" />
+</div>
+
+<div>
+    <p id="handleResult">执行结果：</p>
+    <p id="handleTime">执行时间：0</p>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <td>库存数</td>
+            <td>订单数</td>
+            <td>当前版本</td>
+        </thead>
+        <tbody>
+            <td id="stock">0</td>
+            <td id="orderCount">0</td>
+            <td id="version">0</td>
+        </tbody>
+    </table>
+</div>
+
+
+<script th:inline="javascript">
+    function sendLock() {
+        var requestNum = $('#requestNum').val();
+        $('#num').val($('#defaultValue').val());
+        if(!requestNum) {
+            requestNum = $('#defaultValue').val();
+        }
+
+        var url = "/user/orderLock";
+        for (var index = 0 ; index < requestNum ; index ++) {
+            send(url);
+        }
+
+
+    }
+
+    function sendNoLock() {
+        var requestNum = $('#requestNum').val();
+        $('#num').val($('#defaultValue').val());
+        if(!requestNum) {
+            requestNum = $('#defaultValue').val();
+        }
+        var url = "/user/orderNoLock";
+        for (var index = 0 ; index < requestNum ; index ++) {
+            send(url);
+        }
+
+    }
+    function sendDBLock() {
+        var requestNum = $('#requestNum').val();
+        $('#num').val($('#defaultValue').val());
+        if(!requestNum) {
+            requestNum = $('#defaultValue').val();
+        }
+        var url = "/user/orderDBLock";
+        for (var index = 0 ; index < requestNum ; index ++) {
+            send(url);
+        }
+
+    }
+    function sendRedisLock() {
+        var requestNum = $('#requestNum').val();
+        $('#num').val($('#defaultValue').val());
+        if(!requestNum) {
+            requestNum = $('#defaultValue').val();
+        }
+        var url = "/user/orderRedisLock";
+        for (var index = 0 ; index < requestNum ; index ++) {
+            send(url);
+        }
+
+    }
+
+    function sendVersionLock() {
+        var requestNum = $('#requestNum').val();
+        $('#num').val(parseInt($('#defaultValue').val()));
+        if(!requestNum) {
+            requestNum = parseInt($('#defaultValue').val());
+        }
+        var url = "/user/orderVersionLock";
+        for (var index = 0 ; index < requestNum ; index ++) {
+            console.info("version send :" + index);
+            send(url);
+        }
+
+    }
+
+    function send(url) {
+        var paramData = {};
+        paramData.userId = 1;
+        paramData.productId = 1;
+        paramData.quantity = 1 ;
+
+        // $.ajax("/user/order", JSON.stringify(paramData))
+        //     .done(function(paramData){
+        //         console.info("success");
+        //     })
+        //     .fail(function(paramData) {
+        //         console.info("fail");
+        //     })
+        //     .always(function(paramData){
+        //         console.info("complete");
+        //     });
+
+        var beginTime = new Date().getTime();
+        console.info("total begin time : ", beginTime);
+
+        $.ajax({
+            url : url,
+            type : "post",
+            contentType : "application/json; charset=utf-8",
+            data : JSON.stringify(paramData),
+            dataType : "json"
+        }).done(function(data){
+
+
+        }).fail(function(data){
+            console.info("fail");
+        }).always(function (data) {
+            console.info("complete");
+            var endTime = new Date().getTime();
+            var count = parseInt($("#num").val());
+            console.info("count:" + count);
+            if(count == 1) {
+                console.info("time", endTime - beginTime);
+                $('#handleTime').html("执行时间:" + (endTime - beginTime));
+                getResult();
+            } else {
+                $("#num").val(count-1);
+            }
+        })
+    }
+
+    function restore() {
+        $.ajax({
+            url : "/user/order/1",
+            type : "post",
+            dataType : "json"
+        }).done(function(data){
+            // console.info("success");
+            $("#handleResult").html(data.message);
+        }).fail(function(data){
+            console.info("fail");
+        }).always(function (data) {
+            console.info("complete");
+            getResult();
+        })
+    }
+
+    function getResult() {
+        $.ajax({
+            url : "/user/1/1",
+            type : "get",
+            dataType : "json"
+        }).done(function(data){
+            // console.info("success");
+            console.info(data);
+            console.info(data.data.orderCount);
+            console.info(data.data.stock);
+            $('#stock').html(data.data.stock);
+            $('#orderCount').html(data.data.count);
+            $('#version').html(data.data.version);
+        }).fail(function(data){
+            console.info("fail");
+        }).always(function (data) {
+            console.info("complete");
+        })
+    }
+
+</script>
+</body>
+</html>

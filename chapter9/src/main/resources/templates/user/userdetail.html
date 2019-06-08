@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user table</title>
+</head>
+<body>
+    <div th:switch="${user}">
+        <h2 th:case="null">user is empty</h2>
+        <div th:case="*">
+            <table>
+                <tr>
+                    <th>id</th>
+                    <th>username</th>
+                    <th>sex</th>
+                    <th>memo</th>
+                    <th>opt</th>
+                </tr>
+                <tr>
+                    <td th:text="${user.id}">99</td>
+                    <td th:text="${user.userName}">99</td>
+                    <td th:text="${user.sex.value}">99</td>
+                    <td th:text="${user.memo}">99</td>
+                    <td>
+                        <a href="#" th:href="@{/user/}">return</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

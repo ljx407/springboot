@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljx.chapter9.dao.UserDao">
+
+    <resultMap id="userResult" type="user">
+        <result column="user_name" property="userName" />
+    </resultMap>
+
+    <select id="findAll" resultMap="userResult">
+        select * from t_user ;
+    </select>
+
+    <insert id="insert" parameterType="user" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into t_user(user_name , sex , memo)
+        values (#{userName},#{sex},#{memo})
+    </insert>
+
+    <update id="updateById" parameterType="user">
+        update t_user
+        <set>
+            <if test="userName != null"> user_name = #{userName},</if>
+            <if test="sex != null"> sex = #{sex},</if>
+            <if test="memo != null"> memo = #{memo},</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>    

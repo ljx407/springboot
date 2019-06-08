@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljx.chapter6.mapper.UserMapper">
+    <resultMap id="userResultMap" type="user">
+        <result column="user_name" property="userName" />
+    </resultMap>
+
+    <select id="findUserById" parameterType="long" resultMap="userResultMap">
+        select
+        *
+        from t_user
+        where id = #{id}
+    </select>
+
+    <insert id="insertUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user(user_name,note,sex)
+        values (#{userName},#{note},#{sex})
+    </insert>
+</mapper>    

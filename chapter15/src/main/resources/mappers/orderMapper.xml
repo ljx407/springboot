@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljx.chapter15.dao.OrderDao">
+
+    <select id="findAll" resultType="Order">
+        select
+          id,
+          productId,
+          userId,
+          quantity,
+          amount
+        from t_order
+    </select>
+
+    <select id="findById" parameterType="long" resultType="Order">
+        select
+          id,
+          productId,
+          userId,
+          quantity,
+          amount
+        from t_order
+        where id = #{id}
+    </select>
+
+    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into t_order(productId,userId,quantity,amount)
+        values (#{productId},#{userId},#{quantity},#{amount})
+    </insert>
+
+    <insert id="batchInsertOrder">
+        insert into t_order(productId,userId,quantity,amount)
+        values
+        <foreach collection="orderList" item="order" separator=",">
+            (#{order.productId},#{order.userId},#{order.quantity},#{order.amount})
+        </foreach>
+    </insert>
+
+    <delete id="deleteAll">
+        delete from t_order ;
+    </delete>
+
+    <select id="findCount" resultType="int">
+        select count(1)
+        from  t_order
+    </select>
+</mapper>    
